@@ -9,6 +9,7 @@
 function checkVisited() {
   const storageTypes = ['cookie', 'local'];
   let visitedStorage;
+  const farFuture = new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * 365 * 10)).toUTCString(); // 10 years in the future
 
   for (const type of storageTypes) {
     if (type === 'cookie') {
@@ -24,7 +25,7 @@ function checkVisited() {
     } else {
       const timestamp = new Date().toUTCString();
       if (type === 'cookie') {
-        document.cookie = `visited=${timestamp}`;
+        document.cookie = `visited=${timestamp}; expires=${farFuture}`;
       } else if (type === 'local') {
         localStorage.setItem('visited', timestamp);
       }
