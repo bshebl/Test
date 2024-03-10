@@ -1,25 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Cookie Check and Creation</title>
+<title>Cookie and Local Storage Check and Creation</title>
 </head>
 <body>
 
 <script>
-function checkCookie() {
-  const visitedCookie = document.cookie.split('; ').find(row => row.startsWith('visited='));
+function checkVisited() {
+  const storageTypes = ['cookie', 'local'];
+  let visitedStorage;
 
-  if (visitedCookie) {
-    const cookieValue = visitedCookie.slice('visited='.length);
-    document.write(`Cookie "visited" is present with value: ${cookieValue}`);
-  } else {
-    const timestamp = new Date().toUTCString();
-    document.cookie = `visited=${timestamp}`;
-    document.write("Added cookie with timestamp as value");
+  for (const type of storageTypes) {
+    if (type === 'cookie') {
+      visitedStorage = document.cookie.split('; ').find(row => row.startsWith('visited='));
+    } else if (type === 'local') {
+      visitedStorage = localStorage.getItem('visited');
+    }
+
+    if (visitedStorage) {
+      const value = visitedStorage.slice('visited='.length);
+      document.write(`${type.toUpperCase()} storage "visited" is present with value: ${value}<br>`);
+      break;
+    } else {
+      const timestamp = new Date().toUTCString();
+      if (type === 'cookie') {
+        document.cookie = `visited=${timestamp}`;
+      } else if (type === 'local') {
+        localStorage.setItem('visited', timestamp);
+      }
+      document.write(`Added ${type.toUpperCase()} storage with timestamp as value<br>`);
+    }
   }
 }
 
-checkCookie();
+checkVisited();
 </script>
 
 </body>
