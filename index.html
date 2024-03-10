@@ -20,7 +20,7 @@ function checkVisited() {
     if (visitedStorage) {
       const value = visitedStorage.slice('visited='.length);
       document.write(`${type.toUpperCase()} storage "visited" is present with value: ${value}<br>`);
-      break;
+      //break;
     } else {
       const timestamp = new Date().toUTCString();
       if (type === 'cookie') {
